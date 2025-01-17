@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environments
+.env/
+*.venv/
+
+# Poetry Lock Files (if needed)
+poetry.lock
+
+# IDE Files
+.idea/
+*.iml
