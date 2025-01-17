@@ -19,7 +19,7 @@ def include_middlewares(app):
         allow_methods=["*"],
         allow_headers=["*"],
     )  # TODO - restrict origins
-    app.add_middleware(SessionMiddleware, secret_key="some-random-string")
+    app.add_middleware(SessionMiddleware, secret_key="some-random-string") # TODO - change secret key
 
     return app
 
