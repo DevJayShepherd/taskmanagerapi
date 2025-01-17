@@ -6,6 +6,9 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
+# Core
+from taskmanager.core.config import settings
+
 
 def include_middlewares(app):
     app.add_middleware(GZipMiddleware, minimum_size=1000)  # Add GZipMiddleware
