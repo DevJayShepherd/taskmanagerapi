@@ -1,13 +1,12 @@
-# Core FastAPI application
 from fastapi import FastAPI
 
-# Middlewares
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
-# Core
 from taskmanager.core.config import settings
+
+from taskmanager.api.v1.base_router import api_router
 
 
 def include_middlewares(app):
@@ -23,10 +22,15 @@ def include_middlewares(app):
 
     return app
 
+def include_routers(app):
+    app.include_router(api_router)
+    return app
+
 
 def start_api():
     app = FastAPI(title=settings.PROJECT_TITLE, version=settings.PROJECT_VERSION)
     app = include_middlewares(app)
+    app = include_routers(app)
     return app
 
 api = start_api()
