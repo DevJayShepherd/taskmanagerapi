@@ -21,6 +21,9 @@ class Settings:
     BASE_URL = f"{API_PROTOCOL}://{API_DOMAIN}"
     CORS_ORIGINS: list = os.getenv("CORS_ORIGINS", "").split(',')
 
+    # Database settings
+    DATABASE_URL: str = os.getenv("DATABASE_URL")
+
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 settings = Settings()
