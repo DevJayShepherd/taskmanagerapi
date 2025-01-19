@@ -28,6 +28,10 @@ def create_task(task: TaskCreate, manager: TaskManager = Depends(get_manager)):
     Returns:
     - TaskRead: The details of the newly created task.
     """
+    # Validate task title to ensure it is not empty
+    if len(task.title) == 0:
+        raise HTTPException(status_code=422, detail="Must provide a title for the task")
+
     return manager.create_task(task)
 
 

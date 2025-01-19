@@ -14,8 +14,9 @@ itsdangerous = "^2.2.0"
 sqlalchemy = "^2.0.37"
 alembic = "^1.14.0"
 
-[tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+httpx = "^0.28.1"
 
 [build-system]
 requires = ["poetry-core"]

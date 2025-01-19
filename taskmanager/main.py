@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from starlette.responses import RedirectResponse
 
 from taskmanager.core.config import settings
 
@@ -18,7 +19,7 @@ def include_middlewares(app):
         allow_methods=["*"],
         allow_headers=["*"],
     )  # TODO - restrict origins
-    app.add_middleware(SessionMiddleware, secret_key="some-random-string") # TODO - change secret key
+    app.add_middleware(SessionMiddleware, secret_key="some-random-string") # TODO - change secret key & move to env variable
 
     return app
 
@@ -34,3 +35,9 @@ def start_api():
     return app
 
 api = start_api()
+
+# redirect / to /docs
+@api.get("/")
+async def redirect_to_docs():
+    # TODO create a welcome page
+    return RedirectResponse(url="/docs")
