@@ -42,7 +42,7 @@ api = start_api()
 
 
 # redirect / to /docs
-@api.get("/")
+@api.get("/", include_in_schema=False)
 async def redirect_to_docs():
     # TODO create a welcome page
     return RedirectResponse(url="/docs")
