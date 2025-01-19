@@ -13,10 +13,12 @@ app.include_router(task_manager_router, prefix="/tasks")
 
 client = TestClient(app)
 
+
 @pytest.fixture
 def mocked_task_manager():
     """Fixture to mock the TaskManager."""
     return MagicMock(spec=TaskManager)
+
 
 @pytest.fixture
 def override_get_manager(mocked_task_manager):
@@ -24,6 +26,7 @@ def override_get_manager(mocked_task_manager):
     app.dependency_overrides[get_manager] = lambda: mocked_task_manager
     yield mocked_task_manager
     app.dependency_overrides.clear()
+
 
 @pytest.fixture
 def sample_task():
@@ -34,6 +37,7 @@ def sample_task():
         description="This is a sample task.",
         completed=False
     )
+
 
 def test_get_task_success(override_get_manager, sample_task):
     """
@@ -54,6 +58,7 @@ def test_get_task_success(override_get_manager, sample_task):
         "completed": False,
     }
     override_get_manager.get_task_by_id.assert_called_once_with("1")
+
 
 def test_get_task_not_found(override_get_manager):
     """

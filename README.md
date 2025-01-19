@@ -49,6 +49,17 @@ Start the FastAPI application locally with hot-reloading.
 make run
 ```
 
+### Code Quality and Testing
+Run the following command to run tests and check code quality.
+```bash
+make lint
+```
+
+Run the following command to run tests only.
+```bash
+make test
+```
+
 The API will be available at:
 - Swagger UI: `http://127.0.0.1:8000/docs`
 - Redoc: `http://127.0.0.1:8000/redoc`

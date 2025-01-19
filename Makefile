@@ -9,7 +9,6 @@ help:
 	@echo "Available commands:"
 	@echo "  run              - Start the FastAPI application"
 	@echo "  install          - Install dependencies using Poetry"
-	@echo "  format           - Format code with Black"
 	@echo "  lint             - Lint code with Flake8"
 	@echo "  test             - Run tests with Pytest"
 	@echo "  migrate          - Apply Alembic migrations"
@@ -35,14 +34,10 @@ migrate:
 makemigrations:
 	$(ALEMBIC) revision --autogenerate -m "New migration"
 
-# Formatting & Linting
-.PHONY: format
-format:
-	poetry run black .
 
 .PHONY: lint
 lint:
-	poetry run flake8 .
+	poetry run flake8 taskmanager tests
 
 # Testing
 .PHONY: test

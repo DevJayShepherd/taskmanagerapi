@@ -4,7 +4,8 @@ from sqlalchemy.exc import NoResultFound
 from typing import List, Optional
 
 from taskmanager.models.tasks.task_models import Task
-from taskmanager.schema.tasks.task_schema import TaskCreate, TaskUpdate, TaskPartialUpdate
+from taskmanager.schema.tasks.task_schema import (TaskCreate,
+                                                  TaskUpdate, TaskPartialUpdate)
 
 
 class TaskManager:
@@ -44,7 +45,8 @@ class TaskManager:
         self.db.refresh(task)
         return task
 
-    def partially_update_task(self, task_id: str, partial_data: TaskPartialUpdate) -> Task:
+    def partially_update_task(self, task_id: str,
+                              partial_data: TaskPartialUpdate) -> Task:
         """Partially update a task."""
         task = self.get_task_by_id(task_id)
         if not task:

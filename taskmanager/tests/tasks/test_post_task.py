@@ -13,10 +13,12 @@ app.include_router(task_manager_router, prefix="/tasks")
 
 client = TestClient(app)
 
+
 @pytest.fixture
 def mocked_task_manager():
     """Fixture to mock the TaskManager."""
     return MagicMock(spec=TaskManager)
+
 
 @pytest.fixture
 def override_get_manager(mocked_task_manager):
@@ -25,10 +27,12 @@ def override_get_manager(mocked_task_manager):
     yield mocked_task_manager
     app.dependency_overrides.clear()
 
+
 @pytest.fixture
 def task_create_request():
     """Fixture to provide valid task creation input."""
     return TaskCreate(title="Sample Task", description="This is a sample task.")
+
 
 def test_create_task_success(override_get_manager, task_create_request):
     """
@@ -45,7 +49,8 @@ def test_create_task_success(override_get_manager, task_create_request):
     # Perform POST request
     response = client.post(
         "/tasks/",
-        json={"title": task_create_request.title, "description": task_create_request.description},
+        json={"title": task_create_request.title,
+              "description": task_create_request.description},
     )
 
     # Assertions
@@ -58,6 +63,7 @@ def test_create_task_success(override_get_manager, task_create_request):
     }
     override_get_manager.create_task.assert_called_once_with(task_create_request)
 
+
 def test_create_task_validation_error():
     """
     Test creating a task with invalid input.
@@ -68,6 +74,7 @@ def test_create_task_validation_error():
     # Assertions
     assert response.status_code == 422
     assert "detail" in response.json()
+
 
 def test_create_task_manager_failure(override_get_manager, task_create_request):
     """
@@ -81,7 +88,8 @@ def test_create_task_manager_failure(override_get_manager, task_create_request):
     # Perform POST request
     response = client.post(
         "/tasks/",
-        json={"title": task_create_request.title, "description": task_create_request.description},
+        json={"title": task_create_request.title,
+              "description": task_create_request.description},
     )
 
     # Assertions

@@ -18,10 +18,13 @@ def include_middlewares(app):
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
-    )  # TODO - restrict origins
-    app.add_middleware(SessionMiddleware, secret_key="some-random-string") # TODO - change secret key & move to env variable
+    )
+    app.add_middleware(SessionMiddleware,
+                       secret_key="some-random-string")
+    # TODO - change secret key & move to env variable
 
     return app
+
 
 def include_routers(app):
     app.include_router(api_router)
@@ -34,7 +37,9 @@ def start_api():
     app = include_routers(app)
     return app
 
+
 api = start_api()
+
 
 # redirect / to /docs
 @api.get("/")

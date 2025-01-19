@@ -12,10 +12,12 @@ app.include_router(task_manager_router, prefix="/tasks")
 
 client = TestClient(app)
 
+
 @pytest.fixture
 def mocked_task_manager():
     """Fixture to mock the TaskManager."""
     return MagicMock(spec=TaskManager)
+
 
 @pytest.fixture
 def override_get_manager(mocked_task_manager):
@@ -23,6 +25,7 @@ def override_get_manager(mocked_task_manager):
     app.dependency_overrides[get_manager] = lambda: mocked_task_manager
     yield mocked_task_manager
     app.dependency_overrides.clear()
+
 
 @pytest.fixture
 def sample_tasks():
@@ -32,6 +35,7 @@ def sample_tasks():
         TaskRead(id="2", title="Task 2", description="Second task", completed=False),
         TaskRead(id="3", title="Task 3", description="Third task", completed=True),
     ]
+
 
 def test_get_all_tasks(override_get_manager, sample_tasks):
     """
@@ -46,11 +50,15 @@ def test_get_all_tasks(override_get_manager, sample_tasks):
     # Assertions
     assert response.status_code == 200
     assert response.json() == [
-        {"id": "1", "title": "Task 1", "description": "First task", "completed": True},
-        {"id": "2", "title": "Task 2", "description": "Second task", "completed": False},
-        {"id": "3", "title": "Task 3", "description": "Third task", "completed": True},
+        {"id": "1", "title": "Task 1",
+         "description": "First task", "completed": True},
+        {"id": "2", "title": "Task 2",
+         "description": "Second task", "completed": False},
+        {"id": "3", "title": "Task 3",
+         "description": "Third task", "completed": True},
     ]
     override_get_manager.get_all_tasks.assert_called_once_with(None)
+
 
 def test_get_completed_tasks(override_get_manager, sample_tasks):
     """
@@ -72,6 +80,7 @@ def test_get_completed_tasks(override_get_manager, sample_tasks):
     ]
     override_get_manager.get_all_tasks.assert_called_once_with(True)
 
+
 def test_get_incomplete_tasks(override_get_manager, sample_tasks):
     """
     Test retrieving only incomplete tasks.
@@ -87,9 +96,11 @@ def test_get_incomplete_tasks(override_get_manager, sample_tasks):
     # Assertions
     assert response.status_code == 200
     assert response.json() == [
-        {"id": "2", "title": "Task 2", "description": "Second task", "completed": False},
+        {"id": "2", "title": "Task 2",
+         "description": "Second task", "completed": False},
     ]
     override_get_manager.get_all_tasks.assert_called_once_with(False)
+
 
 def test_get_tasks_empty_list(override_get_manager):
     """

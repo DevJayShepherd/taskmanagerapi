@@ -3,7 +3,8 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 from taskmanager.core.depends import get_db_session
 from taskmanager.crud.tasks.task_manager_crud import TaskManager
-from taskmanager.schema.tasks.task_schema import TaskCreate, TaskRead, TaskUpdate, TaskPartialUpdate
+from taskmanager.schema.tasks.task_schema import (TaskCreate, TaskRead,
+                                                  TaskUpdate, TaskPartialUpdate)
 
 task_manager_router = APIRouter()
 
@@ -30,13 +31,15 @@ def create_task(task: TaskCreate, manager: TaskManager = Depends(get_manager)):
     """
     # Validate task title to ensure it is not empty
     if len(task.title) == 0:
-        raise HTTPException(status_code=422, detail="Must provide a title for the task")
+        raise HTTPException(status_code=422,
+                            detail="Must provide a title for the task")
 
     return manager.create_task(task)
 
 
 @task_manager_router.get("/", response_model=List[TaskRead])
-def get_tasks(completed: Optional[bool] = Query(None), manager: TaskManager = Depends(get_manager)):
+def get_tasks(completed: Optional[bool] = Query(None),
+              manager: TaskManager = Depends(get_manager)):
     """
     Retrieve a list of tasks.
 
@@ -78,7 +81,8 @@ def get_task(task_id: str, manager: TaskManager = Depends(get_manager)):
 
 
 @task_manager_router.put("/{task_id}", response_model=TaskRead)
-def update_task(task_id: str, task_data: TaskUpdate, manager: TaskManager = Depends(get_manager)):
+def update_task(task_id: str, task_data: TaskUpdate,
+                manager: TaskManager = Depends(get_manager)):
     """
     Update an existing task.
 
@@ -102,7 +106,8 @@ def update_task(task_id: str, task_data: TaskUpdate, manager: TaskManager = Depe
 
 
 @task_manager_router.patch("/{task_id}", response_model=TaskRead)
-def partially_update_task(task_id: str, partial_data: TaskPartialUpdate, manager: TaskManager = Depends(get_manager)):
+def partially_update_task(task_id: str, partial_data: TaskPartialUpdate,
+                          manager: TaskManager = Depends(get_manager)):
     """
     Partially update a task.
 
